@@ -74,6 +74,7 @@
         android:layout_marginStart="156dp"
         android:layout_marginTop="20dp"
         android:text="Buscar"
+        android:onClick="buscarGimnasio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
 
@@ -91,6 +92,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button">
 
         <LinearLayout
+            android:id="@+id/resultados"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
