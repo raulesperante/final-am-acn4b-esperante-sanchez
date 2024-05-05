@@ -1,6 +1,10 @@
 package ar.edu.davinci.goldengym;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +24,13 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void buscarGimnasio(View view){
+        Log.i("debug1", "se ejecuta");
+        LinearLayout resultados = findViewById(R.id.resultados);
+        TextView resultado = new TextView(this);
+        resultado.setText("Av Belgrano 1100, Avellaneda");
+        resultados.addView(resultado);
     }
 }
