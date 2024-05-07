@@ -5,12 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
+    android:visibility="visible"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="71dp"
+        android:layout_height="100dp"
+        android:background="@color/menu_item"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,7 +23,10 @@
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Golden Gym" />
+            android:fontFamily="@font/bebas"
+            android:text="Golden Gym"
+            android:textColor="@color/color_boton"
+            android:textSize="36sp" />
 
     </LinearLayout>
 
@@ -28,9 +34,10 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
         android:text="BUSCA LA SUCURSAL MÁS CERCANA"
+        android:textColor="@color/color_texto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
@@ -38,10 +45,24 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="64dp"
-        android:text="Ver en el mapa"
+        android:text="Ver en el MAPA"
+        android:textColor="@color/color_texto"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    <TextView
+        android:id="@+id/icono_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="124dp"
+        android:text="\u2630"
+        android:paddingRight="8sp"
+        android:textSize="14sp"
+        android:textColor="@color/color_boton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <TextView
@@ -51,19 +72,36 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="96dp"
         android:text="Lista"
+        android:textColor="@color/color_boton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
+    <ImageView
+        android:id="@+id/marcador"
+        android:layout_width="25dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="12dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/marcador"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/campoBusqueda" />
+
     <EditText
         android:id="@+id/campoBusqueda"
-        android:layout_width="331dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="96dp"
-        android:hint="Buscar por dirección, código postal o sucursal"
+        android:paddingLeft="40dp"
         android:ems="10"
+        android:hint="Buscar por dirección, código postal o sucursal"
         android:inputType="text"
+        android:textColorHint="@color/buscador"
+        android:textColor="@color/white"
         android:textSize="12sp"
+        android:background="@drawable/borde_buscador"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
@@ -73,17 +111,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="156dp"
         android:layout_marginTop="20dp"
-        android:text="Buscar"
+        android:backgroundTint="@color/color_boton"
         android:onClick="buscarGimnasio"
+        android:text="Buscar"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/campoBusqueda" />
 
     <ScrollView
         android:id="@+id/listaGimnasios"
         android:layout_width="0dp"
-        android:layout_height="444dp"
+        android:layout_height="370dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -95,7 +135,41 @@
             android:id="@+id/resultados"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/menu_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/menu_item">
+
+                <TextView
+                    android:id="@+id/menu_texto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Av. Caseros 3000, CABA"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/menu_flecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="➤"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="8dp" />
+
+            </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
