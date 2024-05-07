@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Golden Gym</string>
+    <string name="subtitulo">BUSCA LA SUCURSAL MÁS CERCANA</string>
+    <string name="ver_mapa">Ver en el MAPA</string>
+    <string name="icono_hamburguesa">\u2630</string>
+    <string name="lista">Lista</string>
+    <string name="hint_buscador">Buscar por dirección, código postal o sucursal</string>
+    <string name="boton_buscar">Buscar</string>
+    <string name="flecha">➤</string>
 </resources>
