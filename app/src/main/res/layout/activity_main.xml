@@ -55,14 +55,14 @@
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/campoBusqueda"
         android:layout_width="331dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="96dp"
+        android:hint="Buscar por dirección, código postal o sucursal"
         android:ems="10"
         android:inputType="text"
-        android:text="Buscar por dirección, código postal o sucursal"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header" />
@@ -76,7 +76,7 @@
         android:text="Buscar"
         android:onClick="buscarGimnasio"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintTop_toBottomOf="@+id/campoBusqueda" />
 
     <ScrollView
         android:id="@+id/listaGimnasios"

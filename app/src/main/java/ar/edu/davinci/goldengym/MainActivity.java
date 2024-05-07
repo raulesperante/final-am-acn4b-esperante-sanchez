@@ -1,10 +1,17 @@
 package ar.edu.davinci.goldengym;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Arrays;
+
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.EditText;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,10 +34,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buscarGimnasio(View view){
-        Log.i("debug1", "se ejecuta");
+        // Limpiar input texto
+        EditText editText = findViewById(R.id.campoBusqueda);
+        if(editText.length() == 0) return;
+        editText.setText("");
         LinearLayout resultados = findViewById(R.id.resultados);
-        TextView resultado = new TextView(this);
-        resultado.setText("Av Belgrano 1100, Avellaneda");
-        resultados.addView(resultado);
+        // Elimina todos los TextView existentes
+        resultados.removeAllViews();
+
+        // Datos simulados
+        String[] gyms = {
+                "Florida 100, Microcentro, CABA",
+                "Lavalle 500, Microcentro CABA",
+                "Av. Caseros 3000, CABA",
+                "Av. Belgrano 1120, Avellaneda",
+                "Av. Mitre 560, Avellaneda"
+        };
+        Integer[] indices = {0, 1, 2, 3, 4};
+        List<Integer> listaIndices = Arrays.asList(indices);
+        Collections.shuffle(listaIndices);
+        for (Integer indice : listaIndices) {
+            TextView direccion = new TextView(this);
+            direccion.setText(gyms[indice]);
+            resultados.addView(direccion);
+        }
     }
 }
