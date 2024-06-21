@@ -3,6 +3,7 @@
     <color name="background">#FF000000</color>
     <color name="primario">#1E1E1B</color>
     <color name="secundario">#F9D203</color>
+    <color name="secundario_dark">#807122</color>
     <color name="texto_primario">#FFFFFFFF</color>
     <color name="texto_secundario">#6F6E70</color>
     <color name="menu_item">#1A191A</color>

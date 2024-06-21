@@ -68,11 +68,24 @@
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/secundario"
             android:text="INICIAR SESION"
+            android:textColor="@color/primario" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/secundario_dark"
+            android:text="REGISTRATE"
             android:textColor="@color/primario" />
 
     </LinearLayout>
