@@ -6,5 +6,6 @@
     <color name="secundario_dark">#807122</color>
     <color name="texto_primario">#FFFFFFFF</color>
     <color name="texto_secundario">#6F6E70</color>
+    <color name="bg_gray">#2A2A2B</color>
     <color name="menu_item">#1A191A</color>
 </resources>
