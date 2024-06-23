@@ -1,5 +1,6 @@
 package ar.edu.davinci.goldengym;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -14,7 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class SelectDireccionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buscarGimnasio(View view){
+
         // Limpiar input texto
         EditText editText = findViewById(R.id.campoBusqueda);
         if(editText.length() == 0) return;
@@ -68,6 +70,19 @@ public class MainActivity extends AppCompatActivity {
             relativeLayout.addView(crearTextViewDireccion(direccion));
             relativeLayout.addView(crearTextViewFlecha());
 
+            relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView textView = v.findViewById(R.id.text_view_direccion);
+                    String textoDireccion = textView.getText().toString();
+
+                    Intent intent = new Intent(SelectDireccionActivity.this, SelectFechaActivity.class);
+                    intent.putExtra("direccion_reserva", textoDireccion);
+
+                    startActivity(intent);
+                }
+            });
+
             // Agrego RelativeLayout a la vista
             resultados.addView(relativeLayout);
         }
@@ -78,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TextView Direccion Gimnasio
         TextView textViewDireccion = new TextView(this);
-        textViewDireccion.setId(View.generateViewId()); // ID
+        textViewDireccion.setId(R.id.text_view_direccion); // ID
         textViewDireccion.setText(direccion);
         textViewDireccion.setTextColor(colorTexto); // color de texto
         textViewDireccion.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16); // tamaño del texto

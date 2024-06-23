@@ -12,8 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoldenGym"
         tools:targetApi="31">
+
         <activity
-            android:name=".MainActivity"
+            android:name=".VistaReservasActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".ReservaActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".SelectHorarioActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".SelectFechaActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".SelectDireccionActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

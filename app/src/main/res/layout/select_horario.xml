@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".SelectHorarioActivity">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <Space
             android:layout_width="match_parent"
@@ -31,28 +34,39 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="¡Te has registrado con éxito!"
+            android:text="SELECCIONA UN HORARIO"
             android:textAlignment="center"
             android:textColor="@color/secundario"
-            android:textSize="42sp"
-            android:textStyle="normal" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="60dp" />
-
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/secundario"
-            android:text="¡EMPIEZA A ENTRENAR!"
-            android:textColor="@color/primario" />
-
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/listaHorarios"
+        android:layout_width="0dp"
+        android:layout_height="450dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/botonHorario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_horario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
