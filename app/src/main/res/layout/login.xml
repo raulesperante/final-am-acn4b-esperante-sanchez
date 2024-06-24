@@ -89,6 +89,7 @@
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/secundario_dark"
             android:text="REGISTRATE"
+            android:onClick="register"
             android:textColor="@color/primario" />
 
     </LinearLayout>
