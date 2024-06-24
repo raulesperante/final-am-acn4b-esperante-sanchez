@@ -42,6 +42,10 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".RegisterSuccessActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:exported="true"
             android:name=".LoginActivity" >
         <intent-filter>

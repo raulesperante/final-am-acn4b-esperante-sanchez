@@ -25,10 +25,10 @@ public class LoginActivity extends  AppCompatActivity {
              Toast.makeText(LoginActivity.this,
                      "Debe completar todos los campos",
                      Toast.LENGTH_SHORT).show();
-         }else{
-             Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-             startActivity(intent);
+             return;
          }
+         Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+         startActivity(intent);
     }
 
     public void register(View view){
