@@ -45,6 +45,7 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
+            android:textColor="#FFFFFF"
             android:textColorHint="@color/texto_secundario" />
 
         <Space
@@ -59,6 +60,7 @@
             android:ems="10"
             android:hint="Contraseña"
             android:inputType="textPassword"
+            android:textColor="#FFFFFF"
             android:textColorHint="@color/texto_secundario" />
 
         <Space
@@ -73,6 +75,7 @@
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/secundario"
             android:text="INICIAR SESION"
+            android:onClick="login"
             android:textColor="@color/primario" />
 
         <Space
