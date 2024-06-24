@@ -17,30 +17,11 @@ public class RegisterSuccessActivity extends  AppCompatActivity {
         setContentView(R.layout.register_success);
     }
 
-    /*
-    public void register(View view){
-        EditText[] inputs = {
-                findViewById(R.id.email),
-                findViewById(R.id.phone),
-                findViewById(R.id.name),
-                findViewById(R.id.surname)
-        };
 
-        for (EditText input : inputs) {
-            if (input.getText().toString().trim().isEmpty()) {
-                Toast.makeText(SuccessActivity.this,
-                        "Debe completar todos los campos",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-
+    public void toStartActivity(View view){
         Intent intent = new Intent(getApplicationContext(), StartActivity.class);
         startActivity(intent);
     }
-
-     */
-
 
 }
 
