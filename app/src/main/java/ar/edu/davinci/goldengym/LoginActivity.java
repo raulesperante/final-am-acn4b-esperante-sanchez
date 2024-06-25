@@ -16,6 +16,10 @@ public class LoginActivity extends  AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+
+
+
     }
 
      public void login(View view){
@@ -25,10 +29,15 @@ public class LoginActivity extends  AppCompatActivity {
              Toast.makeText(LoginActivity.this,
                      "Debe completar todos los campos",
                      Toast.LENGTH_SHORT).show();
-         }else{
-             Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-             startActivity(intent);
+             return;
          }
+         Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+         startActivity(intent);
+    }
+
+    public void register(View view){
+        Intent intent = new Intent(getApplicationContext(), RegistroActivity.class);
+        startActivity(intent);
     }
 }
 

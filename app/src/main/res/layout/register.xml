@@ -51,7 +51,8 @@
             android:ems="10"
             android:hint="Nombre"
             android:inputType="text"
-            android:textColorHint="@color/texto_secundario" />
+            android:textColorHint="@color/texto_secundario"
+            android:textColor="@color/texto_primario"/>
 
         <Space
             android:layout_width="match_parent"
@@ -65,7 +66,8 @@
             android:ems="10"
             android:hint="Apellido"
             android:inputType="text"
-            android:textColorHint="@color/texto_secundario" />
+            android:textColorHint="@color/texto_secundario"
+            android:textColor="@color/texto_primario"/>
 
         <Space
             android:layout_width="match_parent"
@@ -79,7 +81,8 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:textColorHint="@color/texto_secundario" />
+            android:textColorHint="@color/texto_secundario"
+            android:textColor="@color/texto_primario"/>
 
         <Space
             android:layout_width="match_parent"
@@ -93,7 +96,8 @@
             android:ems="10"
             android:hint="Teléfono"
             android:inputType="phone"
-            android:textColorHint="@color/texto_secundario" />
+            android:textColorHint="@color/texto_secundario"
+            android:textColor="@color/texto_primario" />
 
         <Space
             android:layout_width="match_parent"
@@ -106,6 +110,7 @@
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/secundario"
             android:text="¡REGISTRARME!"
+            android:onClick="register"
             android:textColor="@color/primario" />
 
 

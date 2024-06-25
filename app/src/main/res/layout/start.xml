@@ -57,6 +57,7 @@
             android:backgroundTint="@color/secundario"
             android:text="¡VAMOS!"
             android:textColor="@color/primario"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:onClick="letsgo"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

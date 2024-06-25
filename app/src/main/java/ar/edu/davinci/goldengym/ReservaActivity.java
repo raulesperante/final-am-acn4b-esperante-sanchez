@@ -13,11 +13,14 @@ public class ReservaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reserva);
+        MyApp app = (MyApp) getApplicationContext();
 
+        TextView textViewActividad = findViewById(R.id.textViewActividad);
         TextView textViewFecha = findViewById(R.id.textViewFecha);
         TextView textViewHorario = findViewById(R.id.textViewHorario);
         TextView textViewDireccion = findViewById(R.id.textViewLugar);
 
+        textViewActividad.setText(app.getGymClass());
         textViewFecha.setText(getIntent().getStringExtra("fecha_reserva"));
         textViewHorario.setText(getIntent().getStringExtra("horario_reserva"));
         textViewDireccion.setText(getIntent().getStringExtra("direccion_reserva"));

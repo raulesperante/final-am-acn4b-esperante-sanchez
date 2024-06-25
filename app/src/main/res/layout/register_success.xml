@@ -51,6 +51,7 @@
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/secundario"
             android:text="¡EMPIEZA A ENTRENAR!"
+            android:onClick="toStartActivity"
             android:textColor="@color/primario" />
 
 
