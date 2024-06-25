@@ -17,9 +17,7 @@ public class LoginActivity extends  AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        // Test
-        MyApp app = (MyApp) getApplicationContext();
-        Log.i("test1", app.getEmail());
+
 
 
     }
