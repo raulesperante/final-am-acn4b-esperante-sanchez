@@ -46,6 +46,10 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".SelectGymClass"
+            android:exported="true">
+        </activity>
+        <activity
             android:exported="true"
             android:name=".LoginActivity" >
         <intent-filter>
