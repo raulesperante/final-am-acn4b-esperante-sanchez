@@ -16,6 +16,12 @@ public class LoginActivity extends  AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        // Test
+        MyApp app = (MyApp) getApplicationContext();
+        Log.i("test1", app.getEmail());
+
+
     }
 
      public void login(View view){
