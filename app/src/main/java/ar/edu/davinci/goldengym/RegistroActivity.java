@@ -1,11 +1,8 @@
 package ar.edu.davinci.goldengym;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -76,23 +72,14 @@ public class RegistroActivity extends  AppCompatActivity {
     }
 
     private void createAccount(String email, String password) {
-        Log.d("debug1", "PASO");
 
-        // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("debug1", "PASO!!!");
                         if (task.isSuccessful()) {
-
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("debug1", "createUserWithEmail:success");
                             goToRegisterSuccess();
-
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("debug1", "createUserWithEmail:failure", task.getException());
                             if(task.getException() instanceof FirebaseAuthUserCollisionException) {
                                 Toast.makeText(RegistroActivity.this,
                                         "Ya hay un usuario registrado con ese email",
@@ -100,10 +87,8 @@ public class RegistroActivity extends  AppCompatActivity {
                             }
                         }
                     }
-
-
                 });
-        // [END create_user_with_email]
+
     }
 
     private boolean isValidEmail(CharSequence email) {
