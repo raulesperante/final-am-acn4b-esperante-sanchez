@@ -27,6 +27,8 @@ public class RegistroActivity extends  AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+        mAuth = FirebaseAuth.getInstance();
+
     }
 
     public void register(View view){
@@ -64,8 +66,8 @@ public class RegistroActivity extends  AppCompatActivity {
             return;
         }
 
-        //this.createAccount();
-        goToRegisterSuccess();
+        createAccount(email, password);
+        //goToRegisterSuccess();
     }
 
     private void goToRegisterSuccess(){
@@ -74,19 +76,23 @@ public class RegistroActivity extends  AppCompatActivity {
     }
 
     private void createAccount(String email, String password) {
+        Log.d("debug1", "PASO");
+
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("debug1", "PASO!!!");
                         if (task.isSuccessful()) {
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("debug1", "createUserWithEmail:success");
                             goToRegisterSuccess();
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            //Log.w("debug1", "createUserWithEmail:failure", task.getException());
+                            Log.w("debug1", "createUserWithEmail:failure", task.getException());
                             if(task.getException() instanceof FirebaseAuthUserCollisionException) {
                                 Toast.makeText(RegistroActivity.this,
                                         "Ya hay un usuario registrado con ese email",
