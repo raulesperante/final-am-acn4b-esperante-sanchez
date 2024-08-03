@@ -88,16 +88,18 @@
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
+
         <EditText
-            android:id="@+id/phone"
+            android:id="@+id/password"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:ems="10"
-            android:hint="Teléfono"
-            android:inputType="phone"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:textColor="@color/texto_primario"
             android:textColorHint="@color/texto_secundario"
-            android:textColor="@color/texto_primario" />
+           />
 
         <Space
             android:layout_width="match_parent"
