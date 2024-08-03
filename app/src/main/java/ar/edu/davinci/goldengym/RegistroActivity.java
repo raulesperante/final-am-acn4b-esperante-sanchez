@@ -63,7 +63,6 @@ public class RegistroActivity extends  AppCompatActivity {
         }
 
         createAccount(email, password);
-        //goToRegisterSuccess();
     }
 
     private void goToRegisterSuccess(){
