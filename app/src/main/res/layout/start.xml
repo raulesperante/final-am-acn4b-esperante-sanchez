@@ -59,5 +59,15 @@
             android:textColor="@color/primario"
             android:layout_gravity="center_horizontal"
             android:onClick="letsgo"/>
+
+        <Button
+            android:id="@+id/ver_reservas"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/secundario"
+            android:text="Ver reservas"
+            android:textColor="@color/primario"
+            android:layout_gravity="center_horizontal"
+            android:onClick="verReservas"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
