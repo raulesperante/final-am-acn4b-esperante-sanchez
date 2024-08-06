@@ -5,7 +5,7 @@ import android.app.Application;
 public class MyApp extends Application {
     private String gymClass;
 
-    public String getGymClass() {
+    public String getActividad() {
         return gymClass;
     }
 
