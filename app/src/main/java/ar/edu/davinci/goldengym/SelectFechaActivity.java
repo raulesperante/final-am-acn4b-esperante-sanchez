@@ -3,26 +3,80 @@ package ar.edu.davinci.goldengym;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class SelectFechaActivity extends AppCompatActivity {
+
+    private static final String TAG = "SelectFechaActivity";
+    private DatabaseReference bd;
+    private List<String> fechas;
+    private String direccionSeleccionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_fecha);
 
-        LinearLayout linearLayout = findViewById(R.id.botonFecha);
-        String[] listaDias = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
-        String[] listaFechasMock = {"8 de Julio", "9 de Julio", "10 de Julio", "11 de Julio", "12 de Julio", "13 de Julio"};
+        direccionSeleccionada = getIntent().getStringExtra("direccion_reserva");
 
-        int indice_fecha = 0;
-        for (String dia : listaDias) {
+        if (direccionSeleccionada != null) {
+            bd = FirebaseDatabase.getInstance().getReference("GymActividades");
+
+            bd.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    fechas = new ArrayList<>();
+
+                    for (DataSnapshot actividadSnapshot : dataSnapshot.getChildren()) {
+                        Map<String, Object> actividadData = (Map<String, Object>) actividadSnapshot.getValue();
+                        if (actividadData != null && actividadData.containsKey("direcciones")) {
+                            Map<String, Object> direccionesData = (Map<String, Object>) actividadData.get("direcciones");
+                            for (Map.Entry<String, Object> entry : direccionesData.entrySet()) {
+                                Map<String, Object> direccionData = (Map<String, Object>) entry.getValue();
+                                String direccion = (String) direccionData.get("direccion");
+                                if (direccion != null && direccion.equals(direccionSeleccionada)) {
+                                    List<String> fechasList = (List<String>) direccionData.get("fechas");
+                                    if (fechasList != null) {
+                                        fechas.addAll(fechasList);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    actualizar();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w(TAG, "Error al leer los valores de la base de datos", databaseError.toException());
+                }
+            });
+        }
+    }
+
+    private void actualizar() {
+        LinearLayout linearLayout = findViewById(R.id.botonFecha);
+        linearLayout.removeAllViews();
+
+        for (String fecha : fechas) {
             // RelativeLayout
             RelativeLayout relativeLayout = new RelativeLayout(this);
 
@@ -35,40 +89,42 @@ public class SelectFechaActivity extends AppCompatActivity {
             relativeLayout.setLayoutParams(layoutParametros);
             relativeLayout.setBackgroundResource(R.color.menu_item); // color de fondo
 
-            if (indice_fecha <= listaFechasMock.length) {
-                relativeLayout.addView(crearTextViewFecha(dia, listaFechasMock[indice_fecha]));
-                indice_fecha++;
-            }
+            // Crear TextView Direccion y Flecha
+            TextView textViewDireccion = crearTextViewFecha(fecha);
+            TextView textViewFlecha = crearTextViewFlecha();
 
-            relativeLayout.addView(crearTextViewFlecha());
+            // Configurar el Tag del RelativeLayout con la direccion
+            relativeLayout.setTag(fecha);
+
+            // Agregar TextViews a RelativeLayout
+            relativeLayout.addView(textViewDireccion);
+            relativeLayout.addView(textViewFlecha);
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView textView = v.findViewById(R.id.text_view_fecha);
-                    String textoFecha = textView.getText().toString();
+                    String textoFecha = (String) v.getTag();
 
                     Intent intent = new Intent(SelectFechaActivity.this, SelectHorarioActivity.class);
-                    intent.putExtra("direccion_reserva", getIntent().getStringExtra("direccion_reserva"));
+                    intent.putExtra("direccion_reserva", direccionSeleccionada);
                     intent.putExtra("fecha_reserva", textoFecha);
 
                     startActivity(intent);
                 }
             });
 
-            // Agrego RelativeLayout a la vista
+            // Agregar RelativeLayout a la vista
             linearLayout.addView(relativeLayout);
         }
-
     }
 
-    private TextView crearTextViewFecha(String dia, String fecha) {
+    private TextView crearTextViewFecha(String fecha) {
         int colorTexto = getResources().getColor(R.color.texto_primario);
 
         // TextView
         TextView textViewFecha = new TextView(this);
-        textViewFecha.setId(R.id.text_view_fecha); // ID
-        textViewFecha.setText(String.format("%s %s", dia, fecha));
+        textViewFecha.setId(R.id.text_view_fecha);
+        textViewFecha.setText(fecha);
         textViewFecha.setTextColor(colorTexto); // color de texto
         textViewFecha.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16); // tamaño del texto
 
@@ -91,7 +147,7 @@ public class SelectFechaActivity extends AppCompatActivity {
 
         // TextView Icono Flecha
         TextView textViewFlecha = new TextView(this);
-        textViewFlecha.setId(View.generateViewId()); // ID
+        textViewFlecha.setId(View.generateViewId()); // Generar un ID único
         textViewFlecha.setText(R.string.flecha);
         textViewFlecha.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20); // tamaño del texto
         textViewFlecha.setTextColor(colorTexto); // color del texto

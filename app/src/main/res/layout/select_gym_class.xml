@@ -51,7 +51,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/bg_gray"
-            android:text="NATACION"
             android:textColor="@color/texto_primario"
             android:onClick="handleClick"/>
 
@@ -65,7 +64,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/bg_gray"
-            android:text="BOXEO"
             android:textColor="@color/texto_primario"
             android:onClick="handleClick"/>
 
@@ -79,7 +77,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/bg_gray"
-            android:text="YOGA"
             android:textColor="@color/texto_primario"
             android:onClick="handleClick"/>
 
@@ -93,7 +90,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/bg_gray"
-            android:text="PILATES"
             android:textColor="@color/texto_primario"
             android:onClick="handleClick"/>
 
@@ -107,7 +103,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/bg_gray"
-            android:text="CROOSFIT"
             android:textColor="@color/texto_primario"
             android:onClick="handleClick"/>
 

@@ -5,56 +5,79 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.EditText;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class SelectDireccionActivity extends AppCompatActivity {
+
+    private static final String TAG = "SelectDireccionActivity";
+    private DatabaseReference bd;
+    private List<String> gymDirecciones;
+    private String actividadSeleccionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.select_direccion);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent intent = getIntent();
+        actividadSeleccionada = intent.getStringExtra("actividad");
+
+        if (actividadSeleccionada != null) {
+            bd = FirebaseDatabase.getInstance().getReference("GymActividades").child(actividadSeleccionada).child("direcciones");
+
+            bd.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    gymDirecciones = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Map<String, Object> direccionData = (Map<String, Object>) snapshot.getValue();
+                        if (direccionData != null) {
+                            String direccion = (String) direccionData.get("direccion");
+                            gymDirecciones.add(direccion);
+                        }
+                    }
+                    actualizar();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w(TAG, "Error al leer los valores de la base de datos", databaseError.toException());
+                }
+            });
+        }
     }
 
-    public void buscarGimnasio(View view){
-
-        // Limpiar input texto
-        EditText editText = findViewById(R.id.campoBusqueda);
-        if(editText.length() == 0) return;
-        editText.setText("");
+    private void actualizar() {
         LinearLayout resultados = findViewById(R.id.resultados);
-        // Elimina todos los TextView existentes
         resultados.removeAllViews();
 
-        // Datos simulados
-        String[] gyms = {
-                "Florida 100, Microcentro, CABA",
-                "Lavalle 500, Microcentro CABA",
-                "Av. Caseros 3000, CABA",
-                "Av. Belgrano 1120, Avellaneda",
-                "Av. Mitre 560, Avellaneda",
-                "Av. Acoyte 480, Caballito, CABA",
-                "Av. Cordoba 4887, Palermo",
-                "Av. Medrano 148,CABA",
-                "Moreno 369, CABA",
-                "Av. Juramento 223, CABA"
-        };
-
-        for (String direccion : gyms) {
+        for (String direccion : gymDirecciones) {
             // RelativeLayout
             RelativeLayout relativeLayout = new RelativeLayout(this);
 
@@ -63,19 +86,25 @@ public class SelectDireccionActivity extends AppCompatActivity {
                     RelativeLayout.LayoutParams.MATCH_PARENT,
                     150
             );
-            layoutParametros.setMargins(0, 0,0, 50);
+            layoutParametros.setMargins(0, 0, 0, 50);
             relativeLayout.setLayoutParams(layoutParametros);
             relativeLayout.setBackgroundResource(R.color.menu_item); // color de fondo
 
-            // Agrego Direccion Gimnasio y Icono Flecha a RelativeLayout
-            relativeLayout.addView(crearTextViewDireccion(direccion));
-            relativeLayout.addView(crearTextViewFlecha());
+            // Crear TextView Direccion y Flecha
+            TextView textViewDireccion = crearTextViewDireccion(direccion);
+            TextView textViewFlecha = crearTextViewFlecha();
+
+            // Configurar el Tag del RelativeLayout con la direccion
+            relativeLayout.setTag(direccion);
+
+            // Agregar TextViews a RelativeLayout
+            relativeLayout.addView(textViewDireccion);
+            relativeLayout.addView(textViewFlecha);
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView textView = v.findViewById(R.id.text_view_direccion);
-                    String textoDireccion = textView.getText().toString();
+                    String textoDireccion = (String) v.getTag();
 
                     Intent intent = new Intent(SelectDireccionActivity.this, SelectFechaActivity.class);
                     intent.putExtra("direccion_reserva", textoDireccion);
@@ -84,7 +113,7 @@ public class SelectDireccionActivity extends AppCompatActivity {
                 }
             });
 
-            // Agrego RelativeLayout a la vista
+            // Agregar RelativeLayout a la vista
             resultados.addView(relativeLayout);
         }
     }
@@ -94,7 +123,7 @@ public class SelectDireccionActivity extends AppCompatActivity {
 
         // TextView Direccion Gimnasio
         TextView textViewDireccion = new TextView(this);
-        textViewDireccion.setId(R.id.text_view_direccion); // ID
+        textViewDireccion.setId(R.id.text_view_direccion);
         textViewDireccion.setText(direccion);
         textViewDireccion.setTextColor(colorTexto); // color de texto
         textViewDireccion.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16); // tamaño del texto
@@ -118,7 +147,7 @@ public class SelectDireccionActivity extends AppCompatActivity {
 
         // TextView Icono Flecha
         TextView textViewFlecha = new TextView(this);
-        textViewFlecha.setId(View.generateViewId()); // ID
+        textViewFlecha.setId(View.generateViewId()); // Generar un ID único
         textViewFlecha.setText(R.string.flecha);
         textViewFlecha.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20); // tamaño del texto
         textViewFlecha.setTextColor(colorTexto); // color del texto
@@ -134,5 +163,100 @@ public class SelectDireccionActivity extends AppCompatActivity {
         textViewFlecha.setLayoutParams(textViewFlechaParametros);
 
         return textViewFlecha;
+    }
+
+    public void buscarGimnasio(View view) {
+        // Limpiar input texto
+        EditText editText = findViewById(R.id.campoBusqueda);
+        LinearLayout resultados = findViewById(R.id.resultados);
+        resultados.removeAllViews();
+        actualizar(editText.getText().toString());
+    }
+
+    private void actualizar(String buscarDireccion) {
+        LinearLayout resultados = findViewById(R.id.resultados);
+        resultados.removeAllViews();
+
+        for (String direccion : gymDirecciones) {
+            if (!buscarDireccion.isEmpty()) {
+                if (direccion.toLowerCase().startsWith(buscarDireccion.toLowerCase())) {
+                    // RelativeLayout
+                    RelativeLayout relativeLayout = new RelativeLayout(this);
+
+                    // RelativeLayout Parametros
+                    RelativeLayout.LayoutParams layoutParametros = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.MATCH_PARENT,
+                            150
+                    );
+                    layoutParametros.setMargins(0, 0, 0, 50);
+                    relativeLayout.setLayoutParams(layoutParametros);
+                    relativeLayout.setBackgroundResource(R.color.menu_item); // color de fondo
+
+                    // Crear TextView Direccion y Flecha
+                    TextView textViewDireccion = crearTextViewDireccion(direccion);
+                    TextView textViewFlecha = crearTextViewFlecha();
+
+                    // Configurar el Tag del RelativeLayout con la direccion
+                    relativeLayout.setTag(direccion);
+
+                    // Agregar TextViews a RelativeLayout
+                    relativeLayout.addView(textViewDireccion);
+                    relativeLayout.addView(textViewFlecha);
+
+                    relativeLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String textoDireccion = (String) v.getTag();
+
+                            Intent intent = new Intent(SelectDireccionActivity.this, SelectFechaActivity.class);
+                            intent.putExtra("direccion_reserva", textoDireccion);
+
+                            startActivity(intent);
+                        }
+                    });
+
+                    // Agregar RelativeLayout a la vista
+                    resultados.addView(relativeLayout);
+                }
+            } else {
+                // RelativeLayout
+                RelativeLayout relativeLayout = new RelativeLayout(this);
+
+                // RelativeLayout Parametros
+                RelativeLayout.LayoutParams layoutParametros = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT,
+                        150
+                );
+                layoutParametros.setMargins(0, 0, 0, 50);
+                relativeLayout.setLayoutParams(layoutParametros);
+                relativeLayout.setBackgroundResource(R.color.menu_item); // color de fondo
+
+                // Crear TextView Direccion y Flecha
+                TextView textViewDireccion = crearTextViewDireccion(direccion);
+                TextView textViewFlecha = crearTextViewFlecha();
+
+                // Configurar el Tag del RelativeLayout con la direccion
+                relativeLayout.setTag(direccion);
+
+                // Agregar TextViews a RelativeLayout
+                relativeLayout.addView(textViewDireccion);
+                relativeLayout.addView(textViewFlecha);
+
+                relativeLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String textoDireccion = (String) v.getTag();
+
+                        Intent intent = new Intent(SelectDireccionActivity.this, SelectFechaActivity.class);
+                        intent.putExtra("direccion_reserva", textoDireccion);
+
+                        startActivity(intent);
+                    }
+                });
+
+                // Agregar RelativeLayout a la vista
+                resultados.addView(relativeLayout);
+            }
+        }
     }
 }
