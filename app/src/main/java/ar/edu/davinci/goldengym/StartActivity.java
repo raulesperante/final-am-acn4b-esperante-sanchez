@@ -17,7 +17,12 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void letsgo(View view){
-        Intent intent = new Intent(getApplicationContext(), SelectGymClass.class);
+        Intent intent = new Intent(getApplicationContext(), SelectActividadActivity.class);
+        startActivity(intent);
+    }
+
+    public void verReservas(View view){
+        Intent intent = new Intent(getApplicationContext(), VistaReservasActivity.class);
         startActivity(intent);
     }
 }
